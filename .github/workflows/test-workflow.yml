@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ master, test-workflows ]
+  pull_request:
+    branches: [ master, test-workflows ]
+
+jobs:
+  build:
+    name: Test Workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: build-push
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ MY_DOCKER_USER }}
+          password: ${{ MY_DOCKER_PASSWORD }}
+          registry: ${{ MY_DOCKER_REGISTRY }}
+          repository: ${{ MY_DOCKER_USER }}/docker-images/gotest
+          tags: v1
+          push: false
+          path: "."
+          dockerfile: build/Dockerfile
+          tag_with_ref: true
