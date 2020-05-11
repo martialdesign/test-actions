@@ -16,9 +16,9 @@ jobs:
       - name: build-push
         uses: docker/build-push-action@v1
         with:
-          username: ${{ MY_DOCKER_USER }}
-          password: ${{ MY_DOCKER_PASSWORD }}
-          registry: ${{ MY_DOCKER_REGISTRY }}
+          username: ${{ secrets.MY_DOCKER_USER }}
+          password: ${{ secrets.MY_DOCKER_PASSWORD }}
+          registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           repository: ${{ MY_DOCKER_USER }}/docker-images/gotest
           tags: v1
           push: false
