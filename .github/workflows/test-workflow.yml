@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.MY_DOCKER_USER }}
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
-          repository: ${{ MY_DOCKER_USER }}/docker-images/gotest
+          repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
           tags: v1
           push: false
           path: "."
