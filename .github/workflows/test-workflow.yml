@@ -23,5 +23,17 @@ jobs:
           username: ${{ secrets.MY_DOCKER_USER }}
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
-          tag_with_ref: true
+          tag_with_sha: true
+          push: false
+      # Push, replace v1 with the actual GIT_TAG
+      - name: Push Image
+        uses: docker/build-push-action@v1
+        with:
+          repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
+          tags: v1
+          dockerfile: build/Dockerfile
+          path: "."
+          username: ${{ secrets.MY_DOCKER_USER }}
+          password: ${{ secrets.MY_DOCKER_PASSWORD }}
+          registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           push: true
