@@ -2,9 +2,15 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ master, test-workflows ]
+    branches:
+      - "**"
   pull_request:
-    branches: [ master, test-workflows ]
+    branches:
+      - master
+      - test-workflows
+  create:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+*"
 
 jobs:
 
@@ -18,12 +24,8 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
-          tags: v1
           dockerfile: build/Dockerfile
           path: "."
-          # username: ${{ secrets.MY_DOCKER_USER }}
-          # password: ${{ secrets.MY_DOCKER_PASSWORD }}
-          # registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           tag_with_sha: true
           push: false
 
@@ -31,7 +33,7 @@ jobs:
     name: Publish Artifacts
     runs-on: ubuntu-latest
     needs: build
-    if: github.event.pull_request.merged
+    if: github.event.create.tags
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
