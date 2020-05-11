@@ -13,15 +13,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: build-push
+      - name: Build Image
         uses: docker/build-push-action@v1
         with:
+          repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
+          tags: v1
+          dockerfile: build/Dockerfile
+          path: "."
           username: ${{ secrets.MY_DOCKER_USER }}
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
-          repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
-          tags: v1
-          push: false
-          path: "."
-          dockerfile: build/Dockerfile
           tag_with_ref: true
+          push: false
