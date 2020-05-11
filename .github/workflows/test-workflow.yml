@@ -24,4 +24,4 @@ jobs:
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           tag_with_ref: true
-          push: false
+          push: true
