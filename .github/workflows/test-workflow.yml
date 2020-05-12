@@ -43,7 +43,7 @@ jobs:
         run: echo ::set-output name=GIT_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Push Image
         uses: docker/build-push-action@v1
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        if: github.event_name == 'create' && contains(github.ref, 'refs/tags/')
         with:
           repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
           tags: ${{ steps.get_version.outputs.GIT_TAG }}
@@ -53,5 +53,7 @@ jobs:
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           push: true
-      - name: Print secret test
-        run: echo ${{ secrets.MY_DOCKER_USER }}
+      # Can't be printed, so safe!
+      # - name: Print secret test
+      #   run: echo ${{ secrets.MY_DOCKER_USER }}
+      # Try curling a protected variable?
