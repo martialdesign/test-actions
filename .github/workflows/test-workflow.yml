@@ -32,7 +32,7 @@ jobs:
     name: Publish Artifacts
     runs-on: ubuntu-latest
     needs: build
-    if: github.event.create.tags
+    if: github.event.push.tags
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
