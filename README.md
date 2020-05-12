@@ -1,0 +1,1 @@
+![CI](https://github.com/martialonline/test-actions/workflows/Continuous%20Integration/badge.svg)
