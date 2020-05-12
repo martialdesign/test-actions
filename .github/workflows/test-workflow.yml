@@ -3,13 +3,13 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - "**"
+      - '**'
   pull_request:
     branches:
       - master
   create:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+*"
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
 
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    # if: github.event.push.tags && contains(github.ref, "release") # If working on a release branch
+    # if: github.event.push.tags && contains(github.ref, 'release') # If working on a release branch
     # if: github.event.label.name == '<label_name>'                 # If particular label is set
     steps:
       - name: Checkout Repository
