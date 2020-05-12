@@ -32,18 +32,20 @@ jobs:
     name: Publish Artifacts
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: github.event_name == "push" && contains(github.ref, "refs/tags/")
     # if: github.event.push.tags && contains(github.ref, "release") # If working on a release branch
     # if: github.event.label.name == '<label_name>'                 # If particular label is set
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      # Push, replace v1 with the actual GIT_TAG
+      - name: Retrieve Tag
+        id: get_version
+        run: echo ::set-output name=GIT_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Push Image
         uses: docker/build-push-action@v1
         with:
           repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
-          tags: ${{ GITHUB_REF##*/ }}
+          tags: ${{ steps.get_version.outputs.GIT_TAG }}
           dockerfile: build/Dockerfile
           path: "."
           username: ${{ secrets.MY_DOCKER_USER }}
