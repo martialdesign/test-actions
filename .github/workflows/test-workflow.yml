@@ -48,11 +48,11 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
-          # tags: ${{ steps.get_version.outputs.GIT_TAG }}
           dockerfile: build/Dockerfile
           path: '.'
           username: ${{ secrets.MY_DOCKER_USER }}
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           tag_with_ref: true
+          tags: latest
           push: true
