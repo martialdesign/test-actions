@@ -11,6 +11,10 @@ on:
     tags:
       - '[0-9].[0-9].[0-9]+*'
 
+
+env:
+  DOCKER_BUILDKIT: 1
+
 jobs:
 
   build:
@@ -31,8 +35,6 @@ jobs:
           path: '.'
           tag_with_sha: true
           push: false
-        env:
-          DOCKER_BUILDKIT: 1
 
   publish:
     name: Publish Artifacts
@@ -60,5 +62,3 @@ jobs:
           tag_with_ref: true
           tags: latest
           push: true
-        env:
-          DOCKER_BUILDKIT: 1
