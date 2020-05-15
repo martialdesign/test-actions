@@ -9,8 +9,7 @@ on:
       - master
   create:
     tags:
-      - '[0-9].[0-9].[0-9]+*'
-
+      - 'v[0-9].[0-9].[0-9]+*'
 
 env:
   DOCKER_BUILDKIT: 1
@@ -47,9 +46,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      # - name: Retrieve Tag
-      #   id: get_version
-      #   run: echo ::set-output name=GIT_TAG::${GITHUB_REF/refs\/tags\//}
+      - name: Retrieve Tag
+        id: get_version
+        run: echo ::set-output name=GIT_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Push Image
         uses: docker/build-push-action@v1
         with:
@@ -59,6 +58,6 @@ jobs:
           username: ${{ secrets.MY_DOCKER_USER }}
           password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
-          tag_with_ref: true
-          tags: latest
+          tag_with_ref: false
+          tags: latest, ${{ steps.get_version.outputs.GIT_TAG }}
           push: true
