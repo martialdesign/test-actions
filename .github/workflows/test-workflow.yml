@@ -64,3 +64,11 @@ jobs:
           tag_with_ref: false
           tags: latest, ${{ steps.get_version.outputs.GIT_TAG }}
           push: true
+
+  testJob:
+    name: Always
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Retrieve Tag
+        run: echo "I always run!"
