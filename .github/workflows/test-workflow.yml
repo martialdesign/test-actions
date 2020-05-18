@@ -25,7 +25,7 @@ jobs:
       - name: Unit Tests
         run: |
           go test ./...
-          go version
+          gos version
       # - name: Build Image
       #   uses: docker/build-push-action@v1
       #   with:
@@ -70,5 +70,12 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - name: Retrieve Tag
+      - name: TestJob
         run: echo "I always run!"
+
+  testJobFail:
+    name: NotSure
+    runs-on: ubuntu-latest
+    steps:
+      - name: TestJobWhenFailed
+        run: echo "I fail if anything fails!"
