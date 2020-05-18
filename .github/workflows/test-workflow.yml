@@ -76,6 +76,7 @@ jobs:
   testJobFail:
     name: NotSure
     runs-on: ubuntu-latest
+    if: failure()
     steps:
       - name: TestJobWhenFailed
-        run: echo "I fail if anything fails!"
+        run: echo "Execute when something fails!"
