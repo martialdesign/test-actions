@@ -73,8 +73,9 @@ jobs:
       - name: TestJob
         run: echo "I always run!"
 
+  # For slack notifications and stuff
   testJobFail:
-    name: NotSure
+    name: OnlyIfFailed
     runs-on: ubuntu-latest
     if: failure()
     steps:
