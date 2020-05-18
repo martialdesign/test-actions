@@ -36,9 +36,9 @@ jobs:
       #     push: false
       - name: Retrieve Tag
         id: get_version
-        run: ecsho ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
-      - name: NotifyIfFailed
-        if: failure()
+        run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
+      - name: NotifyIfFailedMaster
+        if: failure() && github.ref == 'refs/heads/master'
         run: echo Notification Here
 
   publish:
