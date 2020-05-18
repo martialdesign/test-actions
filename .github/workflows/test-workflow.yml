@@ -36,7 +36,7 @@ jobs:
       #     push: false
       - name: Retrieve Tag
         id: get_version
-        run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
+        run: ecsho ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
       - name: NotifyIfFailed
         if: failure()
         run: echo Notification Here
