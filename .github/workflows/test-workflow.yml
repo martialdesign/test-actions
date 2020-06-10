@@ -27,9 +27,13 @@ jobs:
       - name: Docker test
         run: docker images
       - name: Docker test
-        run: docker run -d -p 3000:3000 test-app:latest
+        run: docker run --name test-app -d -p 3000:3000 test-app:latest
       - name: Docker test
         run: docker ps
+      - name: Docker exec
+        run: docker exec test-app ps
+      - name: Curl
+        run: curl localhost:3000
       # - name: Unit Tests
       #   run: |
       #     go test ./...
