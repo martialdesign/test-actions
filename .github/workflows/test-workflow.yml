@@ -23,10 +23,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Docker test
-        run: |
-          docker build -t test-app:latest -f build/Dockerfile .
-          docker images
-          docker run -d -p 3000:3000 test-app:latest
+        run: docker build -t test-app:latest -f build/Dockerfile .
+      - name: Docker test
+        run: docker images
+      - name: Docker test
+        run: docker run -d -p 3000:3000 test-app:latest
+      - name: Docker test
+        run: docker ps
       # - name: Unit Tests
       #   run: |
       #     go test ./...
