@@ -10,8 +10,8 @@ on:
   create:
     tags:
       - 'v[0-9].[0-9].[0-9]+*'
-  schedule:
-    - cron:  '*/5 * * * *'
+  # schedule:
+  #   - cron:  '* * * * *'
 
 env:
   DOCKER_BUILDKIT: 1
