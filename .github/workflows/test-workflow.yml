@@ -25,19 +25,19 @@ jobs:
       matrix:
         include:
           - os: ubuntu-18.04
-            dockerfile: Dockerfile
-            docker_taget: local
-            docker_image: test:latest
+            path: Dockerfile
+            target: local
+            image: test:${{ github.job }}
           - os: ubuntu-18.04
             dockerfile: DockerfilePlus
-            docker_taget: local
-            docker_image: test-plus:latest
+            target: local
+            image: test-plus:latest
     steps:
       - name: Test
         run: |
-          echo ${{ matrix.dockerfile }}
-          echo ${{ matrix.docker_target }}
-          echo ${{ matrix.docker_image }}
+          echo ${{ matrix.path }}
+          echo ${{ matrix.target }}
+          echo ${{ matrix.image }}
 
   build:
     name: Build Artifacts
