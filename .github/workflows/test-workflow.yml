@@ -20,20 +20,24 @@ jobs:
 
   test-matrix:
     name: Test Matrix
-    runs-on: ubuntu-18.04
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        docker-images: [test-oss, test-plus]
         include:
-          - docker-images: test-oss
-            dockerfile: DockerfileOSS
-          - docker-images: test-plus
-            dockerfile: DockerfilePLUS
+          - os: ubuntu-18.04
+            dockerfile: Dockerfile
+            docker_taget: local
+            docker_image: test:latest
+          - os: ubuntu-18.04
+            dockerfile: DockerfilePlus
+            docker_taget: local
+            docker_image: test-plus:latest
     steps:
       - name: Test
         run: |
-          echo ${{ matrix.docker-images }}
-          echo ${{ matrix.docker-images.dockerfile }}
+          echo ${{ matrix.dockerfile }}
+          echo ${{ matrix.docker_target }}
+          echo ${{ matrix.docker_image }}
 
   build:
     name: Build Artifacts
