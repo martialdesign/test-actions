@@ -18,6 +18,23 @@ env:
 
 jobs:
 
+  test-matrix:
+    name: Test Matrix
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        docker-images: [test-oss, test-plus]
+        include:
+          - docker-images: test-oss
+            dockerfile: DockerfileOSS
+          - docker-images: test-plus
+            dockerfile: DockerfilePLUS
+    steps:
+      - name: Test
+        run: |
+          echo ${{ matrix.docker-images }}
+          echo ${{ matrix.docker-images.dockerfile }}
+
   build:
     name: Build Artifacts
     runs-on: ubuntu-latest
