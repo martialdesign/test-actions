@@ -116,7 +116,7 @@ jobs:
   job-failure:
     name: OnlyIfFailed
     runs-on: ubuntu-18.04
-    if: failure()
+    if: always()
     steps:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
