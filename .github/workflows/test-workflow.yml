@@ -127,4 +127,4 @@ jobs:
           SLACK_MESSAGE: 'Post Content :rocket:'
           SLACK_TITLE: Test Title
           SLACK_USERNAME: SlackBot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_TOKEN }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
