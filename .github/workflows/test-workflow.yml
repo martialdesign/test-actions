@@ -124,7 +124,8 @@ jobs:
           SLACK_CHANNEL: dboenig-test
           SLACK_COLOR: '#3278BD'
           SLACK_ICON_EMOJI: ':github:'
-          SLACK_TITLE: Pipeline Failure [${{ github.run_id }}]
-          SLACK_MESSAGE: 'The workflow "${{ github.workflow }}" has failed, please check the logs.'
+          SLACK_TITLE: Pipeline Failure
+          SLACK_MESSAGE: 'The workflow pipeline has failed, please check the logs.'
+          SLACK_FOOTER: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
           SLACK_USERNAME: SlackBot
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
