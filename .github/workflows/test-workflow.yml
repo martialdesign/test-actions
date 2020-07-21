@@ -127,5 +127,5 @@ jobs:
           SLACK_TITLE: Pipeline Failure
           SLACK_MESSAGE: 'The workflow pipeline has failed, please check the log URL below'
           SLACK_FOOTER: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-          SLACK_USERNAME: GitHub-Actions
+          SLACK_USERNAME: GitHub-CI
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
