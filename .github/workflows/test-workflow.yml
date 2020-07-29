@@ -84,7 +84,7 @@ jobs:
     name: Publish Artifacts
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'create' && contains(github.ref, 'refs/tags/')
+    if: github.event_name == 'create' && contains(github.ref, 'refs/tags/') || github.event.pull_request.merged
     # if: github.event_name == 'create' && contains(github.ref, 'refs/tags/')
     # if: github.event.push.tags && contains(github.ref, 'release') # If working on a release branch
     # if: github.event.label.name == '<label_name>'                 # If particular label is set
@@ -100,12 +100,10 @@ jobs:
           repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
           dockerfile: build/Dockerfile
           path: '.'
-          username: ${{ secrets.MY_DOCKER_USER }}
-          password: ${{ secrets.MY_DOCKER_PASSWORD }}
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           tag_with_ref: false
           tags: ${{ steps.get_version.outputs.GIT_TAG }},latest
-          push: true
+          push: false
 
   testJob:
     name: Always
