@@ -27,7 +27,7 @@ jobs:
           - os: ubuntu-18.04
             path: Dockerfile
             target: local
-            image: test:${{ github.job }}
+            image: test:${{ github.job_nr }}
           - os: ubuntu-18.04
             path: DockerfilePlus
             target: local
