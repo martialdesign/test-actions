@@ -15,6 +15,7 @@ on:
 
 env:
   DOCKER_BUILDKIT: 1
+  RUNNER_OS: ubuntu-18.04
 
 jobs:
 
@@ -24,11 +25,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-18.04
+          - os: ${{ env.RUNNER_OS }}
             path: Dockerfile
             target: local
             image: test:${{ github.job_nr }}
-          - os: ubuntu-18.04
+          - os: {{ env.RUNNER_OS }}
             path: DockerfilePlus
             target: local
             image: test-plus:latest
