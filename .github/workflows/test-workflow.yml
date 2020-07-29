@@ -25,11 +25,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ${{ env.RUNNER_OS }}
+          - os: ${{ RUNNER_OS }}
             path: Dockerfile
             target: local
             image: test:${{ github.job_nr }}
-          - os: {{ env.RUNNER_OS }}
+          - os: {{ RUNNER_OS }}
             path: DockerfilePlus
             target: local
             image: test-plus:latest
