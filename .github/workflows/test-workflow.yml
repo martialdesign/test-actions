@@ -85,7 +85,7 @@ jobs:
     name: Publish Artifacts
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'create' && contains(github.ref, 'refs/tags/') || github.event.pull_request.merged
+    if: github.event.pull_request.merged || github.event_name == 'create' && contains(github.ref, 'refs/tags/')
     # if: github.event_name == 'create' && contains(github.ref, 'refs/tags/')
     # if: github.event.push.tags && contains(github.ref, 'release') # If working on a release branch
     # if: github.event.label.name == '<label_name>'                 # If particular label is set
