@@ -38,11 +38,14 @@ jobs:
           echo ${{ matrix.path }}
           echo ${{ matrix.target }}
           echo ${{ matrix.image }}
+          echo ${{ matrix.image }}
 
   build:
     name: Build Artifacts
     runs-on: ubuntu-latest
-    if: (github.event_name == 'schedule' && github.repository == '${{ github.repository }}')
+    if: 
+      github.event.pull_request.opened && 
+      github.repository == '${{ github.repository }}'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
