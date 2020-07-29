@@ -25,7 +25,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-18.04
+          - os: ubuntu-latest
             path: Dockerfile
             target: local
             image: test:${{ github.job_nr }}
