@@ -38,6 +38,7 @@ jobs:
           echo ${{ matrix.path }}
           echo ${{ matrix.target }}
           echo ${{ matrix.image }}
+          echo ${{ matrix.image }}
 
   build:
     name: Build Artifacts
