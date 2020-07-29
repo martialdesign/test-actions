@@ -29,7 +29,7 @@ jobs:
             path: Dockerfile
             target: local
             image: test:${{ github.job_nr }}
-          - os: {{ RUNNER_OS }}
+          - os: ${{ RUNNER_OS }}
             path: DockerfilePlus
             target: local
             image: test-plus:latest
