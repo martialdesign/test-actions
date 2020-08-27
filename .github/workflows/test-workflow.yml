@@ -104,7 +104,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
-          dockerfile: build/Dockerfile
+          dockerfile: build/Dockerfiles
           path: '.'
           registry: ${{ secrets.MY_DOCKER_REGISTRY }}
           tag_with_ref: false
