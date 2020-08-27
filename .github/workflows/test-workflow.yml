@@ -117,7 +117,7 @@ jobs:
     if: always()
     steps:
       - name: TestJob
-        run: echo "I always run!"
+        run: echos "I always run!"
 
   # For slack notifications and stuff
   job-failure:
