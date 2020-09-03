@@ -59,6 +59,20 @@ jobs:
       #   run: docker build -t test-app:latest -f build/Dockerfile .
       - name: Docker test
         run: docker images
+      - name: Test Artifacts
+        run: echo 'Test123' > hello.txt
+      - name: Upload Chart
+        uses: actions/upload-artifact@v2
+        with:
+          name: hello
+          path: ${{ github.workspace }}/hello.txt
+      - name: Retrieve latest Helm Chart
+        uses: actions/download-artifact@v2
+        with:
+          name: hello
+          path: ${{ github.workspace }}
+      - name: Test Artifacts
+        run: ls -ltr
       # - name: Docker test
       #   run: docker run --name test-app -d -p 3000:3000 test-app:latest
       # - name: Docker test
