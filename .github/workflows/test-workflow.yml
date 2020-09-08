@@ -130,6 +130,7 @@ jobs:
     name: TestJob
     runs-on: ubuntu-latest
     continue-on-error: true
+    needs: [test-matrix]
     if: always()
     steps:
       - name: TestJobFail
