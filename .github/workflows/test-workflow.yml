@@ -7,11 +7,11 @@ on:
   pull_request:
     branches:
       - master
-    # types:
-    #   - opened
-    #   - reopened
-    #   - synchronize
-    #   - closed
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
   # create:
   #   tags:
   #     - 'v[0-9].[0-9].[0-9]+*'
@@ -27,7 +27,7 @@ jobs:
   test-matrix:
     name: Test Matrix
     runs-on: ${{ matrix.os }}
-    if: github.event.pull_request.opened || github.event.pull_request.merged 
+    if: github.event.pull_request.opened
     strategy:
       matrix:
         include:
@@ -127,7 +127,7 @@ jobs:
           push: false
 
   testJob:
-    name: Always
+    name: TestJob
     runs-on: ubuntu-latest
     continue-on-error: true
     if: always()
@@ -141,7 +141,7 @@ jobs:
         run: echos false
 
   testJob2:
-    name: Always
+    name: TestJob2
     runs-on: ubuntu-latest
     steps:
       - name: TestJobFail
@@ -158,6 +158,7 @@ jobs:
     runs-on: ubuntu-18.04
     needs: [testJob, testJob2]
     if: always()
+    needs: [testJob]
     steps:
       - name: 'Test'
         id: check
@@ -165,7 +166,7 @@ jobs:
       - run: echo ${{ steps.check.outputs.failures }}
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
-        if: steps.check.outputs.failures > 0
+        if: ${{ steps.check.outputs.failures }} > 0
         env:
           SLACK_CHANNEL: dboenig-test
           SLACK_COLOR: '#3278BD'
