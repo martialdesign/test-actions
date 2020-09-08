@@ -160,7 +160,7 @@ jobs:
         id: check
         uses: martialonline/workflow-failure-action@master
       - run: echo ${{ steps.check.outputs.failures }}
-        if: steps.check.outputs.failures
+        if: steps.check.outputs.failures == 1
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
         if: ${{steps.check.outputs.failures}} > 0
