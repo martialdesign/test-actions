@@ -154,7 +154,7 @@ jobs:
   job-failure:
     name: OnlyIfFailed
     runs-on: ubuntu-18.04
-    if: always() && github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: 'Test'
         id: check
