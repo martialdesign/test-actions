@@ -129,10 +129,28 @@ jobs:
   testJob:
     name: Always
     runs-on: ubuntu-latest
+    continue-on-error: true
     if: always()
     steps:
-      - name: TestJob
-        run: echos "I always run!"
+      - name: TestJobFail
+        run: echos "I will fail"
+      - name: TestJobAlways
+        run: echo "I always run!"
+        if: failure() || success()
+      - name: TestJobFail2
+        run: echos false
+
+  testJob2:
+    name: Always
+    runs-on: ubuntu-latest
+    steps:
+      - name: TestJobFail
+        run: echos "I will fail"
+      - name: TestJobAlways
+        run: echo "I always run!"
+        if: failure() || success()
+      - name: TestJobFail2
+        run: echos false
 
   # For slack notifications and stuff
   job-failure:
