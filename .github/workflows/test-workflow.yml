@@ -157,6 +157,7 @@ jobs:
     name: OnlyIfFailed
     runs-on: ubuntu-18.04
     if: always()
+    needs: [testJob]
     steps:
       - name: 'Test'
         id: check
