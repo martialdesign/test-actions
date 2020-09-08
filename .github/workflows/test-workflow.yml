@@ -159,12 +159,12 @@ jobs:
       - name: 'Test'
         id: check
         uses: martialonline/workflow-failure-action@master
-      - run: echo ${{ steps.check.outputs.failures }}
-      - run: echo ${{ steps.check.outputs.failures }}
-        if: ${{ contains(steps.check.outputs.failures, '1') }}
+      - run: echo ${{ steps.check.outputs.status, }}
+      - run: echo ${{ steps.check.outputs.status, }}
+        if: contains(steps.check.outputs.status, 'failed')
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
-        if: ${{steps.check.outputs.failures}} != 0
+        if: contains(steps.check.outputs.status, 'failed')
         env:
           SLACK_CHANNEL: dboenig-test
           SLACK_COLOR: '#3278BD'
