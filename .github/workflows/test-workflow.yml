@@ -35,7 +35,7 @@ jobs:
             path: Dockerfile
             target: local
             image: test:${{ github.job_nr }}
-          - os: ubuntu-18.04
+          - os: ubuntu-20.04
             path: DockerfilePlus
             target: local
             image: test-plus:latest
