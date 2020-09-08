@@ -154,14 +154,14 @@ jobs:
   job-failure:
     name: OnlyIfFailed
     runs-on: ubuntu-18.04
-    if: github.ref == 'refs/heads/master'
+    if: always() && github.ref == 'refs/heads/master'
     steps:
       - name: 'Test'
         id: check
         uses: martialonline/workflow-failure-action@master
       - run: echo ${{ steps.check.outputs.failures }}
       - run: echo ${{ steps.check.outputs.failures }}
-        if: ${{steps.check.outputs.failures}} == '1'
+        if: ${{ steps.check.outputs.failures }} == '1'
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
         if: ${{steps.check.outputs.failures}} != 0
