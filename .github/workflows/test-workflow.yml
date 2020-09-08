@@ -161,7 +161,7 @@ jobs:
         uses: martialonline/workflow-failure-action@master
       - run: echo ${{ steps.check.outputs.failures }}
       - run: echo ${{ steps.check.outputs.failures }}
-        if: ${{steps.check.outputs.failures}} != '0'
+        if: ${{steps.check.outputs.failures}} != 0
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
         if: ${{steps.check.outputs.failures}} > 0
