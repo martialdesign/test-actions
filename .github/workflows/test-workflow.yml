@@ -24,7 +24,7 @@ env:
 jobs:
 
   test-matrix:
-    name: Test Matrix
+    name: OnlyOnOpenPR
     runs-on: ${{ matrix.os }}
     if: github.event.pull_request.opened
     strategy:
@@ -47,11 +47,9 @@ jobs:
           echo ${{ matrix.image }}
 
   build:
-    name: Build Artifacts
+    name: Build (PrOpen)
     runs-on: ubuntu-latest
-    if: 
-      github.event.pull_request.opened && 
-      github.repository == '${{ github.repository }}'
+    if: github.event.pull_request.opened && github.repository == '${{ github.repository }}'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
