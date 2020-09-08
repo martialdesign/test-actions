@@ -127,7 +127,7 @@ jobs:
     name: TestJob
     runs-on: ubuntu-latest
     continue-on-error: true
-    needs: [test-matrix]
+    # needs: [test-matrix]
     steps:
       - name: TestJobFail
         run: echos "I will fail"
