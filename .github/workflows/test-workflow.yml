@@ -7,11 +7,11 @@ on:
   pull_request:
     branches:
       - master
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - closed
+    # types:
+    #   - opened
+    #   - reopened
+    #   - synchronize
+    #   - closed
   create:
     tags:
       - 'v[0-9].[0-9].[0-9]+*'
@@ -27,6 +27,7 @@ jobs:
   test-matrix:
     name: Test Matrix
     runs-on: ${{ matrix.os }}
+    if: github.event.pull_request.opened
     strategy:
       matrix:
         include:
@@ -137,10 +138,14 @@ jobs:
   job-failure:
     name: OnlyIfFailed
     runs-on: ubuntu-18.04
-    if: failure()
+    if: always()
     steps:
+      - name: 'Test'
+        id: check
+        uses: martialonline/workflow-failure-action@master
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
+        if: steps.check.outputs.failures > 0
         env:
           SLACK_CHANNEL: dboenig-test
           SLACK_COLOR: '#3278BD'
