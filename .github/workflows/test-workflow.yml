@@ -1,9 +1,9 @@
 name: Continuous Integration
 
 on:
-  # push:
-    # branches:
-    #   - master
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
@@ -164,7 +164,7 @@ jobs:
       - run: echo ${{ steps.check.outputs.failures }}
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
-        if: steps.check.outputs.failures > "0"
+        if: steps.check.outputs.failures > 0
         env:
           SLACK_CHANNEL: dboenig-test
           SLACK_COLOR: '#3278BD'
