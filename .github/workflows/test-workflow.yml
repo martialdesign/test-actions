@@ -158,7 +158,7 @@ jobs:
     steps:
       - name: 'Test'
         id: check
-        uses: martialonline/workflow-failure-action@master
+        uses: martialonline/workflow-status@v1
       - run: echo ${{ steps.check.outputs.status }}
       - run: echo ${{ steps.check.outputs.status }}
         if: contains(steps.check.outputs.status, 'failed')
