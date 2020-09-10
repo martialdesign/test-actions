@@ -27,7 +27,7 @@ jobs:
   test-matrix:
     name: OnlyOnOpenPR
     runs-on: ${{ matrix.os }}
-    if: github.repository == env.GIT_REPO
+    if: github.repository == ${{ env.GIT_REPO }}
     strategy:
       matrix:
         include:
