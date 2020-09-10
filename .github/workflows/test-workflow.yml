@@ -165,28 +165,11 @@ jobs:
           status: custom
           custom_payload: |
             {
-              text: "Custom Field Check",
+              username: 'action-slack',
+              icon_emoji: ':octocat:',
               attachments: [{
-                "author_name": "8398a7@action-slack", // json
-                fallback: 'fallback',
-                color: 'good',
-                title: 'CI Result',
-                text: 'Succeeded',
-                fields: [{
-                  title: 'lower case',
-                  value: 'LOWER CASE CHECK'.toLowerCase(),
-                  short: true
-                },
-                {
-                  title: 'reverse',
-                  value: 'gnirts esrever'.split('').reverse().join(''),
-                  short: true
-                },
-                {
-                  title: 'long title1',
-                  value: 'long value1',
-                  short: false
-                }]
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} succeeded in ${process.env.AS_TOOK}`,
               }]
             }
           # author_name: ''
