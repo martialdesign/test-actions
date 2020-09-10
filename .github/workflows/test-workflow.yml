@@ -176,7 +176,7 @@ jobs:
               attachments: [{
                 color: '${{ steps.check.outputs.status }}' == 'success' ? 'good' : '${{ steps.check.outputs.status }}' == 'failed' ? 'danger' : 'warning',
                 fields: [{
-                  title: 'Commit',
+                  title: 'Failed Commit',
                   value: '${{ steps.commit.outputs.sha }}',
                   short: true
                 },
