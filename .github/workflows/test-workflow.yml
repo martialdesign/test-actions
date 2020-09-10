@@ -164,12 +164,13 @@ jobs:
         with:
           author_name: ''
           channel: '#dboenig-test'
-          status: ${{ job.status }}
           username: Github-CI
           icon_emoji: ':nginx:'
           fields: repo,commit,message,author,took
+          text: 'Hans Peter mueffelt'
           mention: here
           if_mention: failure
+          status: ${{ job.status }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
