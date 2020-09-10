@@ -20,13 +20,14 @@ on:
 env:
   DOCKER_BUILDKIT: 1
   RUNNER_OS: ubuntu-18.04
+  GIT_REPO: martialonline/test-actions
 
 jobs:
 
   test-matrix:
     name: OnlyOnOpenPR
     runs-on: ${{ matrix.os }}
-    if: github.event.pull_request.opened
+    if: github.repository == env.GIT_REPO
     strategy:
       matrix:
         include:
@@ -173,7 +174,7 @@ jobs:
               channel: '#dboenig-test',
               mention: 'channel',
               attachments: [{
-                color: '${{ steps.check.outputs.status }}' === 'success' ? 'good' : '${{ steps.check.outputs.status }}' === 'failed' ? 'danger' : 'warning',
+                color: '${{ steps.check.outputs.status }}' == 'success' ? 'good' : '${{ steps.check.outputs.status }}' == 'failed' ? 'danger' : 'warning',
                 fields: [{
                   title: 'Commit',
                   value: '${{ steps.commit.outputs.sha }}',
