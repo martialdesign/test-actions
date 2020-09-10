@@ -163,15 +163,15 @@ jobs:
       - uses: 8398a7/action-slack@v3
         if: contains(steps.check.outputs.status, 'failed')
         with:
+          channel: '#dboenig-test'
           status: ${{ job.status }}
-          author_name: Github-CI
+          usernme: Github-CI
           icon_emoji: ':nginx:'
           fields: repo,commit,message,author
           mention: here
           if_mention: failure
         env:
-          GITHUB_TOKEN: ${{ github.token }} # optional
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
 
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@master
