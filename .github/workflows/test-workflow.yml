@@ -196,7 +196,7 @@ jobs:
                   short: true
                 },
                 {
-                  title: 'Log',
+                  title: 'Pipeline Log',
                   value: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
                   short: false
                 }]
