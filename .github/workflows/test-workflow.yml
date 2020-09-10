@@ -48,7 +48,7 @@ jobs:
 
   build:
     name: Build (PrOpen)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: github.event.pull_request.opened
     steps:
       - name: Checkout Repository
