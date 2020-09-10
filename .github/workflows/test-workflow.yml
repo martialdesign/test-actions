@@ -170,7 +170,7 @@ jobs:
               channel: '#dboenig-test',
               attachments: [{
                 color: '${{ steps.check.outputs.status }}' === 'success' ? 'good' : '${{ steps.check.outputs.status }}' === 'failed' ? 'danger' : 'warning',
-                text: '${{ job.status }}',
+                text: 'The workflow pipeline has failed, please check the log URL below',
                 fields: [{
                   title: 'Repository',
                   value: '${{ github.repository }}',
@@ -190,6 +190,11 @@ jobs:
                   title: 'Author',
                   value: '${{ github.actor }}',
                   short: true
+                },
+                {
+                  title: 'Log',
+                  value: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+                  short: false
                 }]
               }]
             }
