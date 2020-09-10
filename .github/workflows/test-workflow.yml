@@ -159,6 +159,9 @@ jobs:
       - name: 'Test'
         id: check
         uses: martialonline/workflow-status@v1
+      - name: Calculate SHA
+        id: commit
+        run: echo "::set-output name=sha::$(echo ${GITHUB_SHA} | cut -c1-8)"
       - uses: 8398a7/action-slack@v3
         if: contains(steps.check.outputs.status, 'failed')
         with:
@@ -179,7 +182,7 @@ jobs:
                 },
                 {
                   title: 'Commit',
-                  value: '${GITHUB_SHA::8}',
+                  value: '${{ steps.commit.outputs.sha }}',
                   short: true
                 },
                 {
