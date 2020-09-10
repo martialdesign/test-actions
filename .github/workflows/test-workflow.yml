@@ -126,7 +126,6 @@ jobs:
   testJob:
     name: TestJob
     runs-on: ubuntu-latest
-    continue-on-error: true
     # needs: [test-matrix]
     steps:
       - name: TestJobFail
@@ -163,11 +162,12 @@ jobs:
       - uses: 8398a7/action-slack@v3
         if: contains(steps.check.outputs.status, 'failed')
         with:
+          author_name: 'test123'
           channel: '#dboenig-test'
           status: ${{ job.status }}
           username: Github-CI
           icon_emoji: ':nginx:'
-          fields: repo,commit,message,author
+          fields: repo,commit,message,author,took
           mention: here
           if_mention: failure
         env:
