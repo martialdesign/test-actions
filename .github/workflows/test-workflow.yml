@@ -171,7 +171,8 @@ jobs:
           mention: here
           if_mention: failure
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          GITHUB_TOKEN: ${{ github.token }} # optional
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
 
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@master
