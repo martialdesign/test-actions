@@ -162,7 +162,7 @@ jobs:
       - uses: 8398a7/action-slack@v3
         if: contains(steps.check.outputs.status, 'failed')
         with:
-          author_name: 'test123'
+          author_name: ''
           channel: '#dboenig-test'
           status: ${{ job.status }}
           username: Github-CI
