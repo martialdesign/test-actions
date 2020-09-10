@@ -165,11 +165,32 @@ jobs:
           status: custom
           custom_payload: |
             {
-              username: 'action-slack',
+              username: 'GITHUB',
               icon_emoji: ':octocat:',
+              channel: '#dboenig-test',
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} succeeded in ${process.env.AS_TOOK}`,
+                text: '${{ job.status }}',
+                fields: [{
+                  title: 'Repository',
+                  value: '${{ github.repository }}',
+                  short: true
+                },
+                {
+                  title: 'Commit',
+                  value: '${{ github.sha }}',
+                  short: true
+                },
+                {
+                  title: 'Ref',
+                  value: '${{ github.ref }}',
+                  short: true
+                },
+                {
+                  title: 'Author',
+                  value: '${{ github.actor }}',
+                  short: false
+                }]
               }]
             }
           # author_name: ''
