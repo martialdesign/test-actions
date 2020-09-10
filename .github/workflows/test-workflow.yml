@@ -162,15 +162,42 @@ jobs:
       - uses: 8398a7/action-slack@v3
         if: contains(steps.check.outputs.status, 'failed')
         with:
-          author_name: ''
-          channel: '#dboenig-test'
-          username: Github-CI
-          icon_emoji: ':nginx:'
-          fields: repo,commit,message,author,took
-          text: 'Hans Peter mueffelt'
-          mention: here
-          if_mention: failure
-          status: ${{ job.status }}
+          status: custom
+          custom_payload: |
+            {
+              text: "Custom Field Check",
+              attachments: [{
+                "author_name": "8398a7@action-slack", // json
+                fallback: 'fallback',
+                color: 'good',
+                title: 'CI Result',
+                text: 'Succeeded',
+                fields: [{
+                  title: 'lower case',
+                  value: 'LOWER CASE CHECK'.toLowerCase(),
+                  short: true
+                },
+                {
+                  title: 'reverse',
+                  value: 'gnirts esrever'.split('').reverse().join(''),
+                  short: true
+                },
+                {
+                  title: 'long title1',
+                  value: 'long value1',
+                  short: false
+                }]
+              }]
+            }
+          # author_name: ''
+          # channel: '#dboenig-test'
+          # username: Github-CI
+          # icon_emoji: ':nginx:'
+          # fields: repo,commit,message,author,took
+          # text: 'Hans Peter mueffelt'
+          # mention: here
+          # if_mention: failure
+          # status: ${{ job.status }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
