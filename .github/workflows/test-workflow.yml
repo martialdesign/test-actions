@@ -155,13 +155,11 @@ jobs:
     name: OnlyIfFailed
     runs-on: ubuntu-18.04
     if: always() && github.ref == 'refs/heads/master'
+    needs: testJob2
     steps:
       - name: 'Test'
         id: check
         uses: martialonline/workflow-status@v1
-      - run: echo ${{ steps.check.outputs.status }}
-      - run: echo ${{ steps.check.outputs.status }}
-        if: contains(steps.check.outputs.status, 'failed')
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@master
         if: contains(steps.check.outputs.status, 'failed')
