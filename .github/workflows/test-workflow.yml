@@ -168,6 +168,7 @@ jobs:
               username: 'GITHUB',
               icon_emoji: ':octocat:',
               channel: '#dboenig-test',
+              mention: 'channel',
               attachments: [{
                 color: '${{ steps.check.outputs.status }}' === 'success' ? 'good' : '${{ steps.check.outputs.status }}' === 'failed' ? 'danger' : 'warning',
                 text: 'The workflow pipeline has failed, please check the log URL below',
@@ -178,7 +179,7 @@ jobs:
                 },
                 {
                   title: 'Commit',
-                  value: '${{ github.sha }}',
+                  value: '${GITHUB_SHA::8}',
                   short: true
                 },
                 {
@@ -210,6 +211,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          GITHUB_SHA: ${{ github.sha }}
 
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@master
