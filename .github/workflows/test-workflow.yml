@@ -165,13 +165,14 @@ jobs:
         with:
           channel: '#dboenig-test'
           status: ${{ job.status }}
-          usernme: Github-CI
+          username: Github-CI
           icon_emoji: ':nginx:'
           fields: repo,commit,message,author
           mention: here
           if_mention: failure
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+          GITHUB_TOKEN: ${{ github.token }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@master
