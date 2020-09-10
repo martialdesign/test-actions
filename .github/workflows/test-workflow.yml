@@ -169,7 +169,7 @@ jobs:
               icon_emoji: ':octocat:',
               channel: '#dboenig-test',
               attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                color: '${{ steps.check.outputs.status }}' === 'success' ? 'good' : '${{ steps.check.outputs.status }}' === 'failed' ? 'danger' : 'warning',
                 text: '${{ job.status }}',
                 fields: [{
                   title: 'Repository',
@@ -189,7 +189,7 @@ jobs:
                 {
                   title: 'Author',
                   value: '${{ github.actor }}',
-                  short: false
+                  short: true
                 }]
               }]
             }
