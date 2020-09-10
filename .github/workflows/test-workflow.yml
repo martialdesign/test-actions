@@ -48,7 +48,7 @@ jobs:
 
   build:
     name: Build (PrOpen)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: github.event.pull_request.opened
     steps:
       - name: Checkout Repository
@@ -160,15 +160,28 @@ jobs:
       - name: 'Test'
         id: check
         uses: martialonline/workflow-status@v1
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@master
+      - uses: 8398a7/action-slack@v3
         if: contains(steps.check.outputs.status, 'failed')
+        with:
+          status: ${{ job.status }}
+          author_name: Github-CI
+          icon_emoji: ':nginx:'
+          fields: repo,commit,message,author
+          mention: here
+          if_mention: failure
         env:
-          SLACK_CHANNEL: dboenig-test
-          SLACK_COLOR: '#3278BD'
-          SLACK_ICON_EMOJI: ':github:'
-          SLACK_TITLE: Pipeline Failure
-          SLACK_MESSAGE: 'The workflow pipeline has failed, please check the log URL below'
-          SLACK_FOOTER: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
-          SLACK_USERNAME: GitHub-CI
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          GITHUB_TOKEN: ${{ github.token }} # optional
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+
+      # - name: Slack Notification
+      #   uses: rtCamp/action-slack-notify@master
+      #   if: contains(steps.check.outputs.status, 'failed')
+      #   env:
+      #     SLACK_CHANNEL: dboenig-test
+      #     SLACK_COLOR: '#3278BD'
+      #     SLACK_ICON_EMOJI: ':nginx:'
+      #     SLACK_TITLE: Pipeline Failure
+      #     SLACK_MESSAGE: 'The workflow pipeline has failed, please check the log URL below'
+      #     SLACK_FOOTER: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+      #     SLACK_USERNAME: GitHub-CI
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
