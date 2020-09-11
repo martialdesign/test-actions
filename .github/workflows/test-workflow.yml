@@ -50,7 +50,7 @@ jobs:
   build:
     name: Build (PrOpen)
     runs-on: ubuntu-20.04
-    if: github.event.pull_request.opened
+    # if: github.event.pull_request.opened
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -58,20 +58,20 @@ jobs:
       #   run: docker build -t test-app:latest -f build/Dockerfile .
       - name: Docker test
         run: docker images
-      - name: Test Artifacts
-        run: echo 'Test123' > hello.txt
-      - name: Upload Chart
-        uses: actions/upload-artifact@v2
-        with:
-          name: hello
-          path: ${{ github.workspace }}/hello.txt
-      - name: Retrieve latest Helm Chart
-        uses: actions/download-artifact@v2
-        with:
-          name: hello
-          path: ${{ github.workspace }}
-      - name: Test Artifacts
-        run: ls -ltr
+      # - name: Test Artifacts
+      #   run: echo 'Test123' > hello.txt
+      # - name: Upload Chart
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: hello
+      #     path: ${{ github.workspace }}/hello.txt
+      # - name: Retrieve latest Helm Chart
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: hello
+      #     path: ${{ github.workspace }}
+      # - name: Test Artifacts
+      #   run: ls -ltr
       # - name: Docker test
       #   run: docker run --name test-app -d -p 3000:3000 test-app:latest
       # - name: Docker test
@@ -84,14 +84,14 @@ jobs:
       #   run: |
       #     go test ./...
       #     go version
-      # - name: Build Image
-      #   uses: docker/build-push-action@v1
-      #   with:
-      #     repository: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
-      #     dockerfile: build/Dockerfile
-      #     path: '.'
-      #     tag_with_sha: true
-      #     push: false
+      - name: Build Image
+        uses: docker/build-push-action@v2
+        with:
+          tags: ${{ secrets.MY_DOCKER_USER }}/docker-images/gotest
+          dockerfile: build/Dockerfile
+          path: '.'
+          tag_with_sha: true
+          push: false
       - name: Retrieve Tag
         id: get_version
         run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
