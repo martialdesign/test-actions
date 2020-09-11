@@ -46,6 +46,7 @@ jobs:
           echo ${{ matrix.target }}
           echo ${{ matrix.image }}
           echo ${{ matrix.image }}
+          which kubectl
 
   build:
     name: Build (PrOpen)
@@ -182,9 +183,14 @@ jobs:
                   short: true
                 },
                 {
-                  title: 'Message',
-                  value: '${{ github.event.head_commit.message }}',
+                  title: 'Author',
+                  value: '${{ github.actor }}',
                   short: true
+                },
+                {
+                  title: 'Commit Message',
+                  value: '${{ github.event.head_commit.message }}',
+                  short: false
                 },
                 {
                   title: 'Pipeline URL',
