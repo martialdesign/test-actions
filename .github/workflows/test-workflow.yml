@@ -109,7 +109,7 @@ jobs:
           --quiet 
           --cache-from type=local,src=/tmp/.buildx-cache 
           --cache-to type=local,dest=/tmp/.buildx-cache
-          ${{ secrets.MY_DOCKER_USER }}/gotest:${{ github.sha }} -f build/Dockerfile .
+          -t ${{ secrets.MY_DOCKER_USER }}/gotest:${{ github.sha }} -f build/Dockerfile .
       - name: Retrieve Tag
         id: get_version
         run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
