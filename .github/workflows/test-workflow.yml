@@ -94,6 +94,7 @@ jobs:
           file: build/Dockerfile
           context: '.'
           push: false
+          build-args: '--quiet'
       - name: Retrieve Tag
         id: get_version
         run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
