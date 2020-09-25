@@ -94,7 +94,7 @@ jobs:
           file: build/Dockerfile
           context: '.'
           push: false
-          build-args: '--quiet'
+          build-args: -q
       - name: Retrieve Tag
         id: get_version
         run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
@@ -127,31 +127,31 @@ jobs:
           tags: ${{ steps.get_version.outputs.GIT_TAG }},latest
           push: false
 
-  testJob:
-    name: TestJob
-    runs-on: ubuntu-latest
-    # needs: [test-matrix]
-    steps:
-      - name: TestJobFail
-        run: echos "I will fail"
-      - name: TestJobAlways
-        run: echo "I always run!"
-        if: failure() || success()
-      - name: TestJobFail2
-        run: echos false
+  # testJob:
+  #   name: TestJob
+  #   runs-on: ubuntu-latest
+  #   # needs: [test-matrix]
+  #   steps:
+  #     - name: TestJobFail
+  #       run: echos "I will fail"
+  #     - name: TestJobAlways
+  #       run: echo "I always run!"
+  #       if: failure() || success()
+  #     - name: TestJobFail2
+  #       run: echos false
 
-  testJob2:
-    name: TestJob2
-    runs-on: ubuntu-latest
-    needs: [test-matrix]
-    steps:
-      - name: TestJobFail
-        run: echos "I will fail"
-      - name: TestJobAlways
-        run: echo "I always run!"
-        if: failure() || success()
-      - name: TestJobFail2
-        run: echos false
+  # testJob2:
+  #   name: TestJob2
+  #   runs-on: ubuntu-latest
+  #   needs: [test-matrix]
+  #   steps:
+  #     - name: TestJobFail
+  #       run: echos "I will fail"
+  #     - name: TestJobAlways
+  #       run: echo "I always run!"
+  #       if: failure() || success()
+  #     - name: TestJobFail2
+  #       run: echos false
 
   # For slack notifications and stuff
   job-failure:
@@ -167,19 +167,20 @@ jobs:
         id: commit
         run: echo "::set-output name=sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
       - uses: 8398a7/action-slack@v3
-        if: contains(steps.check.outputs.status, 'failed')
+        if: steps.check.outputs.status == 'failure'
         with:
           status: custom
           custom_payload: |
             {
               username: 'Github',
               icon_emoji: ':octocat:',
-              channel: '#dboenig-test',
               mention: 'channel',
               attachments: [{
-                color: '${{ steps.check.outputs.status }}' == 'success' ? 'good' : '${{ steps.check.outputs.status }}' == 'failed' ? 'danger' : 'warning',
+                title: '${{ steps.commit.outputs.repo }}',
+                text: ${{ steps.check.outputs.status }}' == 'success' ? 'good' : '${{ steps.check.outputs.status }}' == 'failure' ? 'danger' : 'warning',
+                color: '${{ steps.check.outputs.status }}' == 'success' ? 'good' : '${{ steps.check.outputs.status }}' == 'failure' ? 'danger' : 'warning',
                 fields: [{
-                  title: 'Failed Commit',
+                  title: 'Commit Hash',
                   value: '${{ steps.commit.outputs.sha }}',
                   short: true
                 },
@@ -190,7 +191,7 @@ jobs:
                 },
                 {
                   title: 'Commit Message',
-                  value: `${{ github.event.head_commit.message }}\nmit\numbruch`,
+                  value: `${{ github.event.head_commit.message }}`,
                   short: false
                 },
                 {
