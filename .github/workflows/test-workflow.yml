@@ -106,10 +106,9 @@ jobs:
       - name: Buildx Quiet
         run: >
           docker buildx build 
-          --quiet 
           --cache-from type=local,src=/tmp/.buildx-cache 
           --cache-to type=local,dest=/tmp/.buildx-cache
-          -t ${{ secrets.MY_DOCKER_USER }}/gotest:${{ github.sha }} -f build/Dockerfile .
+          -t ${{ secrets.MY_DOCKER_USER }}/gotest:${{ github.sha }} -f build/Dockerfile . 2>&1 > /dev/null
       - name: Retrieve Tag
         id: get_version
         run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
