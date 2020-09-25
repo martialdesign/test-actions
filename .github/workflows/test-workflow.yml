@@ -57,8 +57,17 @@ jobs:
         uses: actions/checkout@v2
       # - name: Docker test
       #   run: docker build -t test-app:latest -f build/Dockerfile .
-      - name: Docker test
-        run: docker images
+      - name: Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          driver-opts: network=host
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
       # - name: Test Artifacts
       #   run: echo 'Test123' > hello.txt
       # - name: Upload Chart
@@ -94,7 +103,13 @@ jobs:
           file: build/Dockerfile
           context: '.'
           push: false
-          build-args: -q
+      - name: Buildx Quiet
+        run: >
+          docker buildx build 
+          --quiet 
+          --cache-from type=local,src=/tmp/.buildx-cache 
+          --cache-to type=local,dest=/tmp/.buildx-cache
+          ${{ secrets.MY_DOCKER_USER }}/gotest:${{ github.sha }} -f build/Dockerfile .
       - name: Retrieve Tag
         id: get_version
         run: echo ::set-output name=GIT_TAG::$(echo ${GITHUB_REF/refs\/tags\//} | tr -d v)
@@ -175,6 +190,7 @@ jobs:
               username: 'Github',
               icon_emoji: ':octocat:',
               mention: 'channel',
+              channel: '#dboenig-test',
               attachments: [{
                 title: '${{ steps.commit.outputs.repo }}',
                 text: '${{ steps.check.outputs.status }}' == 'success' ? 'good' : '${{ steps.check.outputs.status }}' == 'failure' ? 'danger' : 'warning',
