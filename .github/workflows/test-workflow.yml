@@ -52,6 +52,7 @@ jobs:
   test-matrix:
     name: OnlyOnOpenPR
     runs-on: ${{ matrix.os }}
+    needs: binary
     if: github.repository == 'martialonline/test-actions'
     strategy:
       matrix:
