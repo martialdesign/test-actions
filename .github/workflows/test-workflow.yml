@@ -24,6 +24,31 @@ env:
 
 jobs:
 
+  binary:
+    name: Build Binary
+    runs-on: ubuntu-18.04
+    outputs:
+      version: ${{ steps.commit.outputs.test }}
+      tags: ${{ steps.commit.outputs.tags }}
+      created: ${{ steps.commit.outputs.created }}
+      sha: ${{ steps.commit.outputs.sha }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Output Variables
+        id: commit
+        run: |
+          SHA=${GITHUB_SHA::8}
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION="$(echo ${GITHUB_REF#refs/tags/} | tr -d v)"
+          else
+            VERSION="${SHA}"
+          fi
+          echo "::set-output name=version::${VERSION}"
+          echo "::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          echo "::set-output name=sha::${SHA}"
+          echo "::set-output name=repo::$(echo ${GITHUB_REPOSITORY} | cut -d '/' -f 2)"
+
   test-matrix:
     name: OnlyOnOpenPR
     runs-on: ${{ matrix.os }}
@@ -34,11 +59,11 @@ jobs:
           - os: ubuntu-20.04
             path: Dockerfile
             target: local
-            image: test:${{ github.job_nr }}
+            image: test:${{ needs.binary.outputs.version }}
           - os: ubuntu-20.04
             path: DockerfilePlus
             target: local
-            image: test-plus:latest
+            image: test-plus:${{ needs.binary.outputs.version }}
     steps:
       - name: Test
         run: |
