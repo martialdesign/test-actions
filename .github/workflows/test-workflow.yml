@@ -28,7 +28,7 @@ jobs:
     name: Build Binary
     runs-on: ubuntu-18.04
     outputs:
-      version: ${{ steps.commit.outputs.test }}
+      version: ${{ steps.commit.outputs.version }}
       tags: ${{ steps.commit.outputs.tags }}
       created: ${{ steps.commit.outputs.created }}
       sha: ${{ steps.commit.outputs.sha }}
