@@ -38,6 +38,7 @@ jobs:
       - name: Output Variables
         id: commit
         run: |
+          echo ${{ github.event.pull_request.head.repo.full_name }}
           SHA=${GITHUB_SHA::8}
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             VERSION="$(echo ${GITHUB_REF#refs/tags/} | tr -d v)"
