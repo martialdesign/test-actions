@@ -21,7 +21,7 @@ env:
   DOCKER_BUILDKIT: 1
   RUNNER_OS: ubuntu-18.04
   GIT_REPO: martialonline/test-actions
-  buildFork: true
+  buildFork: false
 
 jobs:
 
