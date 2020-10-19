@@ -21,7 +21,7 @@ env:
   DOCKER_BUILDKIT: 1
   RUNNER_OS: ubuntu-18.04
   GIT_REPO: martialonline/test-actions
-  buildFork: false
+  buildFork: yes
 
 jobs:
 
@@ -50,7 +50,7 @@ jobs:
           echo "::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           echo "::set-output name=sha::${SHA}"
           echo "::set-output name=repo::$(echo ${GITHUB_REPOSITORY} | cut -d '/' -f 2)"
-        if: env.buildFork == true
+        if: env.buildFork == 'yes'
 
   test-matrix:
     name: OnlyOnOpenPR
