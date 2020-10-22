@@ -205,14 +205,16 @@ jobs:
     steps:
       - name: 'Test'
         id: check
-        uses: martialonline/workflow-status@v1
+        uses: martialonline/workflow-status@switch-to-composite
       - name: Calculate SHA
         id: commit
         run: |
           echo "::set-output name=sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
           echo "::set-output name=repo::$(echo ${GITHUB_REPOSITORY} | cut -d '/' -f 2)"
       - uses: 8398a7/action-slack@v3
-        if: steps.check.outputs.status == 'failure'
+        if: 
+          steps.check.outputs.status == 'failure' || 
+          steps.check.outputs.status == 'cancelled'
         with:
           status: custom
           custom_payload: |
