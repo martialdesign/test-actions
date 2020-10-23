@@ -205,7 +205,7 @@ jobs:
     steps:
       - name: 'Test'
         id: check
-        uses: martialonline/workflow-status@switch-to-composite
+        uses: martialonline/workflow-status@v2
       - name: Calculate SHA
         id: commit
         run: |
